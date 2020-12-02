@@ -12,7 +12,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
 
-app.get("/", function (req, res) {});
+app.get("/", function (req, res) {
+  res.send("Hello world!");
+});
 
 app.post("/add", (req, res) => {
   const limit = 1000000;
@@ -94,10 +96,7 @@ app.post("/divide", (req, res) => {
   let msg = `The division of given numbers`;
   let sts = "success";
   //let err = false;
-  if (num2 === 0) {
-    msg = "Cannot divide by zero";
-    sts = "error";
-  }
+
   if (num1 < -limit || num2 < -limit || result < -limit) {
     msg = "Underflow";
     sts = "error";
@@ -107,11 +106,18 @@ app.post("/divide", (req, res) => {
     sts = "error";
   }
 
-  res.send({
-    status: sts,
-    message: msg,
-    result: result,
-  });
+  if (num2 === 0) {
+    res.send({
+      status: "error",
+      message: "Cannot divide by zero",
+    });
+  } else {
+    res.send({
+      status: sts,
+      message: msg,
+      result: result,
+    });
+  }
 });
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));
