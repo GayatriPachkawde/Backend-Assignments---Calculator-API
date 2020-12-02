@@ -14,22 +14,106 @@ app.use(bodyParser.json());
 
 app.get("/", function (req, res) {});
 
-app.post("/add/:num1/:num2", (req, res) => {
-  const JSONparams = req.params;
-  const num1 = parseInt(JSONparams.num1);
-  const num2 = parseInt(JSONparams.num2);
-  //const sum = parseInt(JSONparams.num1) + ;
-  //console.log(sum);
-  //   const response = JSON.parse(JSONparams);
-  //   const sum = response.num1 + response.num2;
-  // res.sendStatus(200);
-  res.set({ "content-type": "Application/json" });
+app.post("/add", (req, res) => {
+  const limit = 1000000;
+  const num1 = parseInt(req.body.num1);
+  const num2 = parseInt(req.body.num2);
+  const result = num1 + num2;
+  let msg = `the sum of given two numbers`;
+  let sts = "success";
+  //let err = false;
+  if (num1 < -limit || num2 < -limit || result < -limit) {
+    msg = "Underflow";
+    sts = "error";
+  }
+  if (num1 > limit || num2 > limit || result > limit) {
+    msg = "Overflow";
+    sts = "error";
+  }
+
   res.send({
-    status: "success",
-    message: `the sum of given two numbers`,
-    sum: num1 + num2,
+    status: sts,
+    message: msg,
+    sum: result,
   });
 });
+
+app.post("/sub", (req, res) => {
+  const limit = 1000000;
+  const num1 = parseInt(req.body.num1);
+  const num2 = parseInt(req.body.num2);
+  const result = num1 - num2;
+  let msg = `the difference of given two numbers`;
+  let sts = "success";
+  //let err = false;
+  if (num1 < -limit || num2 < -limit || result < -limit) {
+    msg = "Underflow";
+    sts = "error";
+  }
+  if (num1 > limit || num2 > limit || result > limit) {
+    msg = "Overflow";
+    sts = "error";
+  }
+
+  res.send({
+    status: sts,
+    message: msg,
+    difference: result,
+  });
+});
+
+app.post("/multiply", (req, res) => {
+  const limit = 1000000;
+  const num1 = parseInt(req.body.num1);
+  const num2 = parseInt(req.body.num2);
+  const result = num1 * num2;
+  let msg = `The product of given numbers`;
+  let sts = "success";
+  //let err = false;
+  if (num1 < -limit || num2 < -limit || result < -limit) {
+    msg = "Underflow";
+    sts = "error";
+  }
+  if (num1 > limit || num2 > limit || result > limit) {
+    msg = "Overflow";
+    sts = "error";
+  }
+
+  res.send({
+    status: sts,
+    message: msg,
+    result: result,
+  });
+});
+
+app.post("/divide", (req, res) => {
+  const limit = 1000000;
+  const num1 = parseInt(req.body.num1);
+  const num2 = parseInt(req.body.num2);
+  const result = num1 / num2;
+  let msg = `The division of given numbers`;
+  let sts = "success";
+  //let err = false;
+  if (num2 === 0) {
+    msg = "Cannot divide by zero";
+    sts = "error";
+  }
+  if (num1 < -limit || num2 < -limit || result < -limit) {
+    msg = "Underflow";
+    sts = "error";
+  }
+  if (num1 > limit || num2 > limit || result > limit) {
+    msg = "Overflow";
+    sts = "error";
+  }
+
+  res.send({
+    status: sts,
+    message: msg,
+    result: result,
+  });
+});
+
 app.listen(port, () => console.log(`App listening on port ${port}!`));
 
 module.exports = app;
