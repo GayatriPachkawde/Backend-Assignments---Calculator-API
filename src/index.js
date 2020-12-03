@@ -18,12 +18,19 @@ app.get("/", function (req, res) {
 
 app.post("/add", (req, res) => {
   const limit = 1000000;
-  const num1 = parseInt(req.body.num1);
-  const num2 = parseInt(req.body.num2);
+  const num1 = Number(req.body.num1);
+  const num2 = Number(req.body.num2);
   const result = num1 + num2;
   let msg = `the sum of given two numbers`;
   let sts = "success";
+
   //let err = false;
+  if (!num1 || !num2) {
+    res.send({
+      status: "error",
+      message: "Invalid data types",
+    });
+  }
   if (num1 < -limit || num2 < -limit || result < -limit) {
     msg = "Underflow";
     sts = "error";
@@ -41,13 +48,20 @@ app.post("/add", (req, res) => {
 });
 
 app.post("/sub", (req, res) => {
+  console.log(Number("34.54"));
   const limit = 1000000;
-  const num1 = parseInt(req.body.num1);
-  const num2 = parseInt(req.body.num2);
+  const num1 = Number(req.body.num1);
+  const num2 = Number(req.body.num2);
   const result = num1 - num2;
   let msg = `the difference of given two numbers`;
   let sts = "success";
   //let err = false;
+  if (!num1 || !num2) {
+    res.send({
+      status: "error",
+      message: "Invalid data types",
+    });
+  }
   if (num1 < -limit || num2 < -limit || result < -limit) {
     msg = "Underflow";
     sts = "error";
@@ -66,12 +80,18 @@ app.post("/sub", (req, res) => {
 
 app.post("/multiply", (req, res) => {
   const limit = 1000000;
-  const num1 = parseInt(req.body.num1);
-  const num2 = parseInt(req.body.num2);
+  const num1 = Number(req.body.num1);
+  const num2 = Number(req.body.num2);
   const result = num1 * num2;
   let msg = `The product of given numbers`;
   let sts = "success";
-  //let err = false;
+
+  if (!num1 || !num2) {
+    res.send({
+      status: "error",
+      message: "Invalid data types",
+    });
+  }
   if (num1 < -limit || num2 < -limit || result < -limit) {
     msg = "Underflow";
     sts = "error";
@@ -90,13 +110,18 @@ app.post("/multiply", (req, res) => {
 
 app.post("/divide", (req, res) => {
   const limit = 1000000;
-  const num1 = parseInt(req.body.num1);
-  const num2 = parseInt(req.body.num2);
+  const num1 = Number(req.body.num1);
+  const num2 = Number(req.body.num2);
   const result = num1 / num2;
   let msg = `The division of given numbers`;
   let sts = "success";
   //let err = false;
-
+  if (!num1 || !num2) {
+    res.send({
+      status: "error",
+      message: "Invalid data types",
+    });
+  }
   if (num1 < -limit || num2 < -limit || result < -limit) {
     msg = "Underflow";
     sts = "error";
