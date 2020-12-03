@@ -115,6 +115,12 @@ app.post("/divide", (req, res) => {
   const result = num1 / num2;
   let msg = `The division of given numbers`;
   let sts = "success";
+  if (num2 === 0) {
+    res.send({
+      status: "error",
+      message: "Cannot divide by zero",
+    });
+  }
   //let err = false;
   if (!num1 || !num2) {
     res.send({
@@ -131,19 +137,11 @@ app.post("/divide", (req, res) => {
     sts = "error";
   }
 
-  if (num2 === 0) {
-    res.send({
-      status: "error",
-      message: "Cannot divide by zero",
-      result: result,
-    });
-  } else {
-    res.send({
-      status: sts,
-      message: msg,
-      result: result,
-    });
-  }
+  res.send({
+    status: sts,
+    message: msg,
+    result: result,
+  });
 });
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));
